@@ -12,6 +12,8 @@ struct vec3;
 
 template <NumberType T>
 struct vec4 {
+
+    // Data
     T x;
     T y;
     T z;
@@ -25,7 +27,10 @@ struct vec4 {
 
     // Zero constructor
     constexpr vec4()
-        : x{static_cast<T>(0.0)}, y{static_cast<T>(0.0)}, z{static_cast<T>(0.0)}, w{static_cast<T>(0.0)}
+        : x{static_cast<T>(0.0)},
+          y{static_cast<T>(0.0)},
+          z{static_cast<T>(0.0)},
+          w{static_cast<T>(0.0)}
     {
     }
 
@@ -104,7 +109,7 @@ struct vec4 {
     static constexpr vec4 ones() { return vec4(static_cast<T>(1.0)); }
 
     static constexpr std::size_t length() { return 4; }
-    static constexpr std::size_t size() { return sizeof(vec4); }
+    static constexpr std::size_t size() { return sizeof(vec4<T>); }
 
     // Component accesses
     constexpr T &operator[](uint32_t i)
@@ -120,8 +125,6 @@ struct vec4 {
                 return z;
             case 3:
                 return w;
-            default:
-                return static_cast<T>(0.0);
         }
     }
 
@@ -139,6 +142,247 @@ struct vec4 {
             case 3:
                 return w;
         }
+    }
+
+    // Unary arithmetic operators
+    template <NumberType A>
+    constexpr vec4 &operator=(vec4<A> const &v)
+    {
+        this->x = static_cast<T>(v.x);
+        this->y = static_cast<T>(v.y);
+        this->z = static_cast<T>(v.z);
+        this->w = static_cast<T>(v.w);
+        return *this;
+    }
+
+    template <NumberType A>
+    constexpr vec4 &operator+=(A scalar)
+    {
+        this->x += static_cast<T>(scalar);
+        this->y += static_cast<T>(scalar);
+        this->z += static_cast<T>(scalar);
+        this->w += static_cast<T>(scalar);
+        return *this;
+    }
+
+    template <NumberType A>
+    constexpr vec4 &operator+=(vec4<A> const &v)
+    {
+        this->x += static_cast<T>(v.x);
+        this->y += static_cast<T>(v.y);
+        this->z += static_cast<T>(v.z);
+        this->w += static_cast<T>(v.w);
+        return *this;
+    }
+
+    template <NumberType A>
+    constexpr vec4 &operator-=(A scalar)
+    {
+        this->x -= static_cast<T>(scalar);
+        this->y -= static_cast<T>(scalar);
+        this->z -= static_cast<T>(scalar);
+        this->w -= static_cast<T>(scalar);
+        return *this;
+    }
+
+    template <NumberType A>
+    constexpr vec4 &operator-=(vec4<A> const &v)
+    {
+        this->x -= static_cast<T>(v.x);
+        this->y -= static_cast<T>(v.y);
+        this->z -= static_cast<T>(v.z);
+        this->w -= static_cast<T>(v.w);
+        return *this;
+    }
+
+    template <NumberType A>
+    constexpr vec4 &operator*=(A scalar)
+    {
+        this->x *= static_cast<T>(scalar);
+        this->y *= static_cast<T>(scalar);
+        this->z *= static_cast<T>(scalar);
+        this->w *= static_cast<T>(scalar);
+        return *this;
+    }
+
+    template <NumberType A>
+    constexpr vec4 &operator*=(vec4<A> const &v)
+    {
+        this->x *= static_cast<T>(v.x);
+        this->y *= static_cast<T>(v.y);
+        this->z *= static_cast<T>(v.z);
+        this->w *= static_cast<T>(v.w);
+        return *this;
+    }
+
+    template <NumberType A>
+    constexpr vec4 &operator/=(A scalar)
+    {
+        this->x /= static_cast<T>(scalar);
+        this->y /= static_cast<T>(scalar);
+        this->z /= static_cast<T>(scalar);
+        this->w /= static_cast<T>(scalar);
+        return *this;
+    }
+
+    template <NumberType A>
+    constexpr vec4 &operator/=(vec4<A> const &v)
+    {
+        this->x /= static_cast<T>(v.x);
+        this->y /= static_cast<T>(v.y);
+        this->z /= static_cast<T>(v.z);
+        this->w /= static_cast<T>(v.w);
+        return *this;
+    }
+
+    // Increment and decrement operators
+
+    vec4 &operator++()
+    {
+        ++this->x;
+        ++this->y;
+        ++this->z;
+        ++this->w;
+        return *this;
+    }
+
+    vec4 &operator--()
+    {
+        --this->x;
+        --this->y;
+        --this->z;
+        --this->w;
+        return *this;
+    }
+
+    vec4 operator++(int)
+    {
+        vec4 result(*this);
+        ++*this;
+        return result;
+    }
+
+    vec4 operator--(int)
+    {
+        vec4 result(*this);
+        --*this;
+        return result;
+    }
+
+    // Compound assignment operators
+
+    // Modulus operator
+    vec4 &operator%=(const vec4 &v)
+    {
+        x %= v.x;
+        y %= v.y;
+        z %= v.z;
+        w %= v.w;
+        return *this;
+    }
+
+    vec4 &operator%=(T scalar)
+    {
+        x %= scalar;
+        y %= scalar;
+        z %= scalar;
+        w %= scalar;
+        return *this;
+    }
+
+    // Bitwise AND operator
+    vec4 &operator&=(const vec4 &v)
+    {
+        x &= v.x;
+        y &= v.y;
+        z &= v.z;
+        w &= v.w;
+        return *this;
+    }
+
+    vec4 &operator&=(T scalar)
+    {
+        x &= scalar;
+        y &= scalar;
+        z &= scalar;
+        w &= scalar;
+        return *this;
+    }
+
+    // Bitwise OR operator
+    vec4 &operator|=(const vec4 &v)
+    {
+        x |= v.x;
+        y |= v.y;
+        z |= v.z;
+        w |= v.w;
+        return *this;
+    }
+
+    vec4 &operator|=(T scalar)
+    {
+        x |= scalar;
+        y |= scalar;
+        z |= scalar;
+        w |= scalar;
+        return *this;
+    }
+
+    // Bitwise XOR operator
+    vec4 &operator^=(const vec4 &v)
+    {
+        x ^= v.x;
+        y ^= v.y;
+        z ^= v.z;
+        w ^= v.w;
+        return *this;
+    }
+
+    vec4 &operator^=(T scalar)
+    {
+        x ^= scalar;
+        y ^= scalar;
+        z ^= scalar;
+        w ^= scalar;
+        return *this;
+    }
+
+    // Bitwise left shift operator
+    vec4 &operator<<=(const vec4 &v)
+    {
+        x <<= v.x;
+        y <<= v.y;
+        z <<= v.z;
+        w <<= v.w;
+        return *this;
+    }
+
+    vec4 &operator<<=(int numBits)
+    {
+        x <<= numBits;
+        y <<= numBits;
+        z <<= numBits;
+        w <<= numBits;
+        return *this;
+    }
+
+    // Bitwise right shift operator
+    vec4 &operator>>=(const vec4 &v)
+    {
+        x >>= v.x;
+        y >>= v.y;
+        z >>= v.z;
+        w >>= v.w;
+        return *this;
+    }
+
+    vec4 &operator>>=(int numBits)
+    {
+        x >>= numBits;
+        y >>= numBits;
+        z >>= numBits;
+        w >>= numBits;
+        return *this;
     }
 
     // String / Print functions
@@ -159,5 +403,6 @@ struct vec4 {
 
 using vec4f = vec4<float>;
 using vec4i = vec4<int>;
+using vec4u = vec4<unsigned int>;
 
 #endif // QUIKMAFF_VEC4_HPP

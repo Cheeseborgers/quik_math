@@ -12,6 +12,7 @@ struct vec4;
 
 template <NumberType T>
 struct vec2 {
+
     // Data
     T x;
     T y;
@@ -51,8 +52,9 @@ struct vec2 {
     static constexpr vec2 zero() { return vec2(static_cast<T>(0.0)); }
     static constexpr vec2 ones() { return vec2(static_cast<T>(1.0)); }
 
+    //
     static constexpr std::size_t length() { return 2; }
-    static constexpr std::size_t size() { return sizeof(vec2); }
+    static constexpr std::size_t size() { return sizeof(vec2<T>); }
 
     // -- Component accesses --
     constexpr T &operator[](uint32_t i)
@@ -79,6 +81,201 @@ struct vec2 {
         }
     }
 
+    // Unary arithmetic operators
+	template<NumberType A>
+	constexpr vec2 & operator=(vec2<A> const& v)
+	{
+		this->x = static_cast<T>(v.x);
+		this->y = static_cast<T>(v.y);
+		return *this;
+	}
+
+	template<NumberType A>
+	constexpr vec2 & operator+=(A scalar)
+	{
+		this->x += static_cast<T>(scalar);
+		this->y += static_cast<T>(scalar);
+		return *this;
+	}
+
+	template<NumberType A>
+	constexpr vec2 & operator+=(vec2<A> const& v)
+	{
+		this->x += static_cast<T>(v.x);
+		this->y += static_cast<T>(v.y);
+		return *this;
+	}
+
+	template<NumberType A>
+	constexpr vec2 & operator-=(A scalar)
+	{
+		this->x -= static_cast<T>(scalar);
+		this->y -= static_cast<T>(scalar);
+		return *this;
+	}
+
+	template<NumberType A>
+	constexpr vec2 & operator-=(vec2<A> const& v)
+	{
+		this->x -= static_cast<T>(v.x);
+		this->y -= static_cast<T>(v.y);
+		return *this;
+	}
+
+	template<NumberType A>
+	constexpr vec2 & operator*=(A scalar)
+	{
+		this->x *= static_cast<T>(scalar);
+		this->y *= static_cast<T>(scalar);
+		return *this;
+	}
+
+	template<NumberType A>
+	constexpr vec2 & operator*=(vec2<A> const& v)
+	{
+		this->x *= static_cast<T>(v.x);
+		this->y *= static_cast<T>(v.y);
+		return *this;
+	}
+
+    template <NumberType A>
+	constexpr vec2 & operator/=(A scalar)
+	{
+		this->x /= static_cast<T>(scalar);
+		this->y /= static_cast<T>(scalar);
+		return *this;
+	}
+
+    template <NumberType A>
+	constexpr vec2 & operator/=(vec2<A> const& v)
+	{
+		this->x /= static_cast<T>(v.x);
+		this->y /= static_cast<T>(v.y);
+		return *this;
+	}
+
+    // Increment and decrement operators
+    vec2 &operator++()
+    {
+        ++this->x;
+        ++this->y;
+        return *this;
+    }
+
+    vec2 &operator--()
+    {
+        --this->x;
+        --this->y;
+        return *this;
+    }
+
+    vec2 operator++(int)
+    {
+        vec2 result(*this);
+        ++*this;
+        return result;
+    }
+
+    vec2 operator--(int)
+    {
+        vec2 result(*this);
+        --*this;
+        return result;
+    }
+
+    // Compound assignment operators
+
+    // Modulus operator
+    vec2 &operator%=(const vec2 &v)
+    {
+        x %= v.x;
+        y %= v.y;
+        return *this;
+    }
+
+    vec2 &operator%=(T scalar)
+    {
+        x %= scalar;
+        y %= scalar;
+        return *this;
+    }
+
+    // Bitwise AND operator
+    vec2 &operator&=(const vec2 &v)
+    {
+        x &= v.x;
+        y &= v.y;
+        return *this;
+    }
+
+    vec2 &operator&=(T scalar)
+    {
+        x &= scalar;
+        y &= scalar;
+        return *this;
+    }
+
+    // Bitwise OR operator
+    vec2 &operator|=(const vec2 &v)
+    {
+        x |= v.x;
+        y |= v.y;
+        return *this;
+    }
+
+    vec2 &operator|=(T scalar)
+    {
+        x |= scalar;
+        y |= scalar;
+        return *this;
+    }
+
+    // Bitwise XOR operator
+    vec2 &operator^=(const vec2 &v)
+    {
+        x ^= v.x;
+        y ^= v.y;
+        return *this;
+    }
+
+    vec2 &operator^=(T scalar)
+    {
+        x ^= scalar;
+        y ^= scalar;
+        return *this;
+    }
+
+    // Bitwise left shift operator
+    vec2 &operator<<=(const vec2 &v)
+    {
+        x <<= v.x;
+        y <<= v.y;
+        return *this;
+    }
+
+    vec2 &operator<<=(int numBits)
+    {
+        x <<= numBits;
+        y <<= numBits;
+        return *this;
+    }
+
+    // Bitwise right shift operator
+    vec2 &operator>>=(const vec2 &v)
+    {
+        x >>= v.x;
+        y >>= v.y;
+        return *this;
+    }
+
+    vec2 &operator>>=(int numBits)
+    {
+        x >>= numBits;
+        y >>= numBits;
+        return *this;
+    }
+
+
     // String / Print functions
     constexpr std::string toString() const
     {
@@ -96,5 +293,6 @@ struct vec2 {
 
 using vec2f = vec2<float>;
 using vec2i = vec2<int>;
+using vec2u = vec2<unsigned int>;
 
 #endif // QUIKMAFF_VEC2_HPP

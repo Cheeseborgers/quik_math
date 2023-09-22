@@ -13,6 +13,7 @@ struct vec4;
 template <NumberType T>
 struct vec3 {
 
+    // Data
     T x;
     T y;
     T z;
@@ -63,7 +64,7 @@ struct vec3 {
     static constexpr vec3 ones() { return vec3(static_cast<T>(1.0)); }
 
     static constexpr std::size_t length() { return 3; }
-    static constexpr std::size_t size() { return sizeof(vec3); }
+    static constexpr std::size_t size() { return sizeof(vec3<T>); }
 
     // -- Component accesses --
     constexpr T &operator[](uint32_t i)
@@ -94,6 +95,212 @@ struct vec3 {
         }
     }
 
+    // Unary arithmetic operators
+	template<NumberType A>
+	constexpr vec3 & operator=(vec3<A> const& v)
+	{
+		this->x = static_cast<T>(v.x);
+		this->y = static_cast<T>(v.y);
+        this->z = static_cast<T>(v.z);
+		return *this;
+	}
+
+	template<NumberType A>
+	constexpr vec3 & operator+=(A scalar)
+	{
+		this->x += static_cast<T>(scalar);
+		this->y += static_cast<T>(scalar);
+        this->z += static_cast<T>(scalar);
+		return *this;
+	}
+
+	template<NumberType A>
+	constexpr vec3 & operator+=(vec3<A> const& v)
+	{
+		this->x += static_cast<T>(v.x);
+		this->y += static_cast<T>(v.y);
+        this->z += static_cast<T>(v.z);
+		return *this;
+	}
+
+	template<NumberType A>
+	constexpr vec3 & operator-=(A scalar)
+	{
+		this->x -= static_cast<T>(scalar);
+		this->y -= static_cast<T>(scalar);
+        this->z -= static_cast<T>(scalar);
+		return *this;
+	}
+
+	template<NumberType A>
+	constexpr vec3 & operator-=(vec3<A> const& v)
+	{
+		this->x -= static_cast<T>(v.x);
+		this->y -= static_cast<T>(v.y);
+        this->z -= static_cast<T>(v.z);
+		return *this;
+	}
+
+	template<NumberType A>
+	constexpr vec3 & operator*=(A scalar)
+	{
+		this->x *= static_cast<T>(scalar);
+		this->y *= static_cast<T>(scalar);
+        this->z *= static_cast<T>(scalar);
+		return *this;
+	}
+
+	template<NumberType A>
+	constexpr vec3 & operator*=(vec3<A> const& v)
+	{
+		this->x *= static_cast<T>(v.x);
+		this->y *= static_cast<T>(v.y);
+        this->z *= static_cast<T>(v.z);
+		return *this;
+	}
+
+    template <NumberType A>
+	constexpr vec3 & operator/=(A scalar)
+	{
+		this->x /= static_cast<T>(scalar);
+		this->y /= static_cast<T>(scalar);
+        this->z /= static_cast<T>(scalar);
+		return *this;
+	}
+
+    template <NumberType A>
+	constexpr vec3 & operator/=(vec3<A> const& v)
+	{
+		this->x /= static_cast<T>(v.x);
+		this->y /= static_cast<T>(v.y);
+        this->z /= static_cast<T>(v.z);
+		return *this;
+	}
+
+    // Increment and decrement operators
+
+    vec3 &operator++()
+    {
+        ++this->x;
+        ++this->y;
+        ++this->z;
+        return *this;
+    }
+
+    vec3 &operator--()
+    {
+        --this->x;
+        --this->y;
+        --this->z;
+        return *this;
+    }
+
+    vec3 operator++(int)
+    {
+        vec3 result(*this);
+        ++*this;
+        return result;
+    }
+
+    vec3 operator--(int)
+    {
+        vec3 result(*this);
+        --*this;
+        return result;
+    }
+
+    // Compound assignment operators
+
+    // Modulus operator
+    vec3& operator%=(const vec3 &v) {
+        x %= v.x;
+        y %= v.y;
+        z %= v.z;
+        return *this;
+    }
+
+    vec3& operator%=(T scalar) {
+        x %= scalar;
+        y %= scalar;
+        z %= scalar;
+        return *this;
+    }
+
+    // Bitwise AND operator
+    vec3& operator&=(const vec3 &v) {
+        x &= v.x;
+        y &= v.y;
+        z &= v.z;
+        return *this;
+    }
+
+    vec3& operator&=(T scalar) {
+        x &= scalar;
+        y &= scalar;
+        z &= scalar;
+        return *this;
+    }
+
+    // Bitwise OR operator
+    vec3& operator|=(const vec3 &v) {
+        x |= v.x;
+        y |= v.y;
+        z |= v.z;
+        return *this;
+    }
+    
+    vec3& operator|=(T scalar) {
+        x |= scalar;
+        y |= scalar;
+        z |= scalar;
+        return *this;
+    }
+
+    // Bitwise XOR operator
+    vec3& operator^=(const vec3 &v) {
+        x ^= v.x;
+        y ^= v.y;
+        z ^= v.z;
+        return *this;
+    }
+
+    vec3& operator^=(T scalar) {
+        x ^= scalar;
+        y ^= scalar;
+        z ^= scalar;
+        return *this;
+    }
+
+    // Bitwise left shift operator
+    vec3& operator<<=(const vec3 &v) {
+        x <<= v.x;
+        y <<= v.y;
+        z <<= v.z;
+        return *this;
+    }
+
+    vec3& operator<<=(int numBits) {
+        x <<= numBits;
+        y <<= numBits;
+        z <<= numBits;
+        return *this;
+    }
+
+    // Bitwise right shift operator
+    vec3& operator>>=(const vec3 &v) {
+        x >>= v.x;
+        y >>= v.y;
+        z >>= v.z;
+        return *this;
+    }
+
+    vec3& operator>>=(int numBits) {
+        x >>= numBits;
+        y >>= numBits;
+        z >>= numBits;
+        return *this;
+    }
+
     // String / Print functions
     constexpr std::string toString() const
     {
@@ -111,5 +318,6 @@ struct vec3 {
 
 using vec3f = vec3<float>;
 using vec3i = vec3<int>;
+using vec3u = vec3<unsigned int>;
 
 #endif // QUIKMAFF_VEC3_HPP
