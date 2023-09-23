@@ -28,7 +28,6 @@ endif()
 
 # Define the library target
 add_library(${PROJECT_NAME}
-    src/ivec2.cpp
     src/vec2.cpp
     src/vec3.cpp
     src/vec4.cpp
