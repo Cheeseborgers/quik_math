@@ -26,25 +26,25 @@ enum class EaseType {
 };
 
 // Easing functions
-template <FloatingPointType T>
+template <IsFloatingPointT T>
 constexpr T linear(T t)
 {
     return t;
 }
 
-template <FloatingPointType T>
+template <IsFloatingPointT T>
 constexpr T easeInQuad(T t)
 {
     return t * t;
 }
 
-template <FloatingPointType T>
+template <IsFloatingPointT T>
 constexpr T easeOutQuad(T t)
 {
     return 1 - (1 - t) * (1 - t);
 }
 
-template <FloatingPointType T>
+template <IsFloatingPointT T>
 constexpr T easeInOutQuad(T t)
 {
     if (t < 0.5) {
@@ -55,19 +55,19 @@ constexpr T easeInOutQuad(T t)
     }
 }
 
-template <FloatingPointType T>
+template <IsFloatingPointT T>
 constexpr T easeInCubic(T t)
 {
     return t * t * t;
 }
 
-template <FloatingPointType T>
+template <IsFloatingPointT T>
 constexpr T easeOutCubic(T t)
 {
     return 1 - pow(1 - t, 3);
 }
 
-template <FloatingPointType T>
+template <IsFloatingPointT T>
 constexpr T easeInOutCubic(T t)
 {
 
@@ -79,19 +79,19 @@ constexpr T easeInOutCubic(T t)
     }
 }
 
-template <FloatingPointType T>
+template <IsFloatingPointT T>
 constexpr T easeInQuartic(T t)
 {
     return t * t * t * t;
 }
 
-template <FloatingPointType T>
+template <IsFloatingPointT T>
 constexpr T easeOutQuartic(T t)
 {
     return 1 - pow(1 - t, 4);
 }
 
-template <FloatingPointType T>
+template <IsFloatingPointT T>
 constexpr T easeInOutQuartic(T t)
 {
     if (t < 0.5) {
@@ -102,19 +102,19 @@ constexpr T easeInOutQuartic(T t)
     }
 }
 
-template <FloatingPointType T>
+template <IsFloatingPointT T>
 constexpr T easeInQuintic(T t)
 {
     return t * t * t * t * t;
 }
 
-template <FloatingPointType T>
+template <IsFloatingPointT T>
 constexpr T easeOutQuintic(T t)
 {
     return 1 - pow(1 - t, 5);
 }
 
-template <FloatingPointType T>
+template <IsFloatingPointT T>
 constexpr T easeInOutQuintic(T t)
 {
     if (t < 0.5) {
@@ -125,14 +125,14 @@ constexpr T easeInOutQuintic(T t)
     }
 }
 
-template <FloatingPointType T>
+template <IsFloatingPointT T>
 constexpr T elastic(T t)
 {
     constexpr T c4 = (2 * std::numbers::pi) / 3.0;
     return t == 0 ? 0 : t == 1 ? 1 : pow(2, -10 * t) * sin((t * 10 - 0.75) * c4) + 1;
 }
 
-template <FloatingPointType T>
+template <IsFloatingPointT T>
 constexpr T bounce(T t)
 {
     if (t < 1 / 2.75) {
@@ -164,7 +164,7 @@ constexpr T bounce(T t)
  * // Use the result for your application.
  * ```
  */
-template <FloatingPointType T>
+template <IsFloatingPointT T>
 constexpr std::function<T(T)> getEaseFunction(EaseType easeType)
 {
     switch (easeType) {

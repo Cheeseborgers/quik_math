@@ -8,13 +8,13 @@
 
 namespace qm {
 
-template<NumberType T>
+template<IsNumberT T>
 bool isnan(T x)
 {
    return std::isnan(x);
 }
 
-template<NumberType T>
+template<IsNumberT T>
 bool isinf(T x)
 {
     return std::isinf(x);
@@ -34,7 +34,7 @@ bool isinf(T x)
  * // maxInt is the largest possible value for the int data type.
  * ```
  */
-template <NumberType T>
+template <IsNumberT T>
 constexpr auto maxValue() -> T
 {
     return std::numeric_limits<T>::max();
@@ -58,7 +58,7 @@ constexpr auto maxValue() -> T
  * // minInt is the smallest possible value for the int data type.
  * ```
  */
-template <NumberType T>
+template <IsNumberT T>
 constexpr auto minValue() -> T
 {
     return std::numeric_limits<T>::min();
@@ -79,7 +79,7 @@ constexpr auto minValue() -> T
  * // numBitsInt is the number of bits used to represent an int.
  * ```
  */
-template <IntegerType T>
+template <IsIntegerT T>
 constexpr auto numBits() -> int
 {
     return std::numeric_limits<T>::digits;
@@ -100,7 +100,7 @@ constexpr auto numBits() -> int
  * // bytes is 256 * 1024, i.e., 262144.
  * ```
  */
-template <IntegerType T>
+template <IsIntegerT T>
 constexpr u64 kb(T x)
 {
     return static_cast<u64>(1024) * x;
@@ -121,7 +121,7 @@ constexpr u64 kb(T x)
  * // bytes is 128 * 1024 * 1024, i.e., 134217728.
  * ```
  */
-template <IntegerType T>
+template <IsIntegerT T>
 constexpr u64 mb(T x)
 {
     return static_cast<u64>(1024) * KB(x);
@@ -142,7 +142,7 @@ constexpr u64 mb(T x)
  * // bytes is 4 * 1024 * 1024 * 1024, i.e., 4294967296.
  * ```
  */
-template <IntegerType T>
+template <IsIntegerT T>
 constexpr u64 gb(T x)
 {
     return static_cast<u64>(1024) * MB(x);
@@ -212,7 +212,7 @@ T abs(T value)
  * // squareRootFloat is 5.0f.
  * ```
  */
-template <NumberType T>
+template <IsNumberT T>
 constexpr T sqrt(T value)
 {
     return std::sqrt(value);
@@ -234,7 +234,7 @@ constexpr T sqrt(T value)
  * // maxVal is 8, which is the greater value.
  * ```
  */
-template <NumberType T>
+template <IsNumberT T>
 constexpr T max(T a, T b)
 {
     return (a < b) ? b : a;
@@ -278,7 +278,7 @@ constexpr T min(T a, T b)
  * // maxValue is 10, which is the largest value in the list.
  * ```
  */
-template <NumberType T>
+template <IsNumberT T>
 constexpr T max(std::initializer_list<T> values)
 {
     T maxValue = *values.begin();
@@ -306,7 +306,7 @@ constexpr T max(std::initializer_list<T> values)
  * // minValue is 1.0, which is the smallest value in the list.
  * ```
  */
-template <NumberType T>
+template <IsNumberT T>
 constexpr T min(std::initializer_list<T> values)
 {
     T minValue = *values.begin();
@@ -339,7 +339,7 @@ constexpr T min(std::initializer_list<T> values)
  * // clampedValue is 5.0 because it falls within the range [0.0, 10.0].
  * ```
  */
-template <NumberType T>
+template <IsNumberT T>
 constexpr T clamp(const T &value, const T &minVal, const T &maxVal)
 {
     if (value < minVal) {
@@ -373,7 +373,7 @@ constexpr T clamp(const T &value, const T &minVal, const T &maxVal)
  * // result is 25.0 because 25.0 is 25% of 100.0.
  * ```
  */
-template <FloatingPointType T>
+template <IsFloatingPointT T>
 constexpr T percentage(T value, T total)
 {
     if (total == static_cast<T>(0.0)) {

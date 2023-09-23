@@ -7,12 +7,12 @@
 #include "functions.hpp"
 
 //  OpenGL typically follows a column-major ordering convention for matrices
-class Mat4 {
+class mat4 {
 public:
-    constexpr Mat4() { m_data.fill({0.0f, 0.0f, 0.0f, 0.0f}); }
-    constexpr Mat4(float value) { m_data.fill({value, value, value, value}); }
+    constexpr mat4() { m_data.fill({0.0f, 0.0f, 0.0f, 0.0f}); }
+    constexpr mat4(float value) { m_data.fill({value, value, value, value}); }
 
-    constexpr Mat4(float m00, float m01, float m02, float m03, float m10, float m11, float m12,
+    constexpr mat4(float m00, float m01, float m02, float m03, float m10, float m11, float m12,
                    float m13, float m20, float m21, float m22, float m23, float m30, float m31,
                    float m32, float m33)
     {
@@ -22,7 +22,7 @@ public:
                    {m30, m31, m32, m33}}};
     }
 
-    constexpr Mat4(const float data[16])
+    constexpr mat4(const float data[16])
     {
         // Copy the data into the matrix
         for (std::size_t row = 0; row < 4; ++row) {
@@ -32,7 +32,7 @@ public:
         }
     }
 
-    constexpr Mat4(const Mat4 &other) { m_data = other.m_data; }
+    constexpr mat4(const mat4 &other) { m_data = other.m_data; }
 
     // Get a specific element from the matrix
     constexpr float &operator()(std::size_t row, std::size_t col) { return m_data[row][col]; }
@@ -40,9 +40,9 @@ public:
     // Get a specific element from the matrix (const version)
     const float &operator()(std::size_t row, std::size_t col) const { return m_data[row][col]; }
 
-    static constexpr Mat4 identity()
+    static constexpr mat4 identity()
     {
-        return Mat4{1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+        return mat4{1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
                     0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
     }
 
@@ -54,9 +54,9 @@ public:
                    {0.0f, 0.0f, 0.0f, 1.0f}}};
     }
 
-    Mat4 operator*(const Mat4 &other) const
+    mat4 operator*(const mat4 &other) const
     {
-        Mat4 result;
+        mat4 result;
 
         for (int col = 0; col < 4; ++col) {
             for (int row = 0; row < 4; ++row) {
@@ -71,9 +71,9 @@ public:
         return result;
     }
 
-    Mat4 operator+(const Mat4 &other) const
+    mat4 operator+(const mat4 &other) const
     {
-        Mat4 result;
+        mat4 result;
 
         for (int row = 0; row < 4; ++row) {
             for (int col = 0; col < 4; ++col) {
@@ -84,9 +84,9 @@ public:
         return result;
     }
 
-    Mat4 operator-(const Mat4 &other) const
+    mat4 operator-(const mat4 &other) const
     {
-        Mat4 result;
+        mat4 result;
 
         for (int row = 0; row < 4; ++row) {
             for (int col = 0; col < 4; ++col) {
@@ -97,9 +97,9 @@ public:
         return result;
     }
 
-    Mat4 operator*(float scalar) const
+    mat4 operator*(float scalar) const
     {
-        Mat4 result;
+        mat4 result;
 
         for (int row = 0; row < 4; ++row) {
             for (int col = 0; col < 4; ++col) {
@@ -110,9 +110,9 @@ public:
         return result;
     }
 
-    Mat4 translation(float x, float y, float z)
+    mat4 translation(float x, float y, float z)
     {
-        Mat4 result;
+        mat4 result;
         result(0, 3) = x;
         result(1, 3) = y;
         result(2, 3) = z;
@@ -122,13 +122,13 @@ public:
     // ===============================================================================
 
     // -- Unary arithmetic operators --
-    Mat4 &operator=(const Mat4 &m)
+    mat4 &operator=(const mat4 &m)
     {
         //std::memcpy(m_data, m.m_data, 16 * sizeof(valType));
         return *this;
     }
 
-    Mat4 &operator+=(const Mat4 &m)
+    mat4 &operator+=(const mat4 &m)
     {
         //m_data[0] += m.m_data[0];
         //m_data[1] += m.m_data[1];
@@ -137,7 +137,7 @@ public:
         return *this;
     }
 
-    Mat4 &operator-=(const Mat4 &m)
+    mat4 &operator-=(const mat4 &m)
     {
         //m_data[0] -= m.m_data[0];
         //m_data[1] -= m.m_data[1];
@@ -146,7 +146,7 @@ public:
         return *this;
     }
 
-    Mat4 &operator*=(const Mat4 &s)
+    mat4 &operator*=(const mat4 &s)
     {
         //m_data[0] *= s;
         //m_data[1] *= s;
@@ -155,9 +155,9 @@ public:
         return *this;
     }
 
-    //Mat4 &operator*=(const Mat4 &m) { return (*this = *this * m); }
+    //mat4 &operator*=(const mat4 &m) { return (*this = *this * m); }
 
-    Mat4 &operator/=(const Mat4 &s)
+    mat4 &operator/=(const mat4 &s)
     {
         //m_data[0] /= s;
         //m_data[1] /= s;
@@ -166,11 +166,11 @@ public:
         return *this;
     }
 
-    //Mat4 &operator/=(const Mat4 &m) { return *this *= inverse(m); }
+    //mat4 &operator/=(const mat4 &m) { return *this *= inverse(m); }
 
     // -- Increment and decrement operators --
 
-    Mat4 &operator++()
+    mat4 &operator++()
     {
         //++m_data[0];
         //++m_data[1];
@@ -179,7 +179,7 @@ public:
         return *this;
     }
 
-    Mat4 &operator--()
+    mat4 &operator--()
     {
         //--m_data[0];
         //--m_data[1];
@@ -188,23 +188,23 @@ public:
         return *this;
     }
 
-    Mat4 operator++(int)
+    mat4 operator++(int)
     {
-        Mat4 Result(*this);
+        mat4 Result(*this);
         ++*this;
         return Result;
     }
 
-    Mat4 operator--(int)
+    mat4 operator--(int)
     {
-        Mat4 Result(*this);
+        mat4 Result(*this);
         --*this;
         return Result;
     }
 
     // ===============================================================================
 
-    // Function to print all values of the Mat4
+    // Function to print all values of the mat4
     constexpr void print() const
     {
         for (std::size_t row = 0; row < 4; ++row) {

@@ -5,12 +5,12 @@
 #include "functions.hpp"
 #include <string>
 
-template <NumberType T>
+template <IsNumberT T>
 struct vec2;
-template <NumberType T>
+template <IsNumberT T>
 struct vec3;
 
-template <NumberType T>
+template <IsNumberT T>
 struct vec4 {
 
     // Data
@@ -35,14 +35,14 @@ struct vec4 {
     }
 
     // Conversion scalar constructors
-    template <NumberType X, NumberType Y, NumberType Z, NumberType W>
+    template <IsNumberT X, IsNumberT Y, IsNumberT Z, IsNumberT W>
     constexpr vec4(X _x, Y _y, Z _z, W _w)
         : x(static_cast<T>(_x)), y(static_cast<T>(_y)), z(static_cast<T>(_z)), w(static_cast<T>(_w))
     {
     }
 
     // Conversion vector constructors
-    template <NumberType X, NumberType A, NumberType B>
+    template <IsNumberT X, IsNumberT A, IsNumberT B>
     constexpr vec4(vec2<X> const &_xy, A _z, B _w)
         : x(static_cast<T>(_xy.x)),
           y(static_cast<T>(_xy.y)),
@@ -51,7 +51,7 @@ struct vec4 {
     {
     }
 
-    template <NumberType A, NumberType X, NumberType B>
+    template <IsNumberT A, IsNumberT X, IsNumberT B>
     constexpr vec4(A _x, vec2<X> const &_yz, B _w)
         : x(static_cast<T>(_x)),
           y(static_cast<T>(_yz.x)),
@@ -60,7 +60,7 @@ struct vec4 {
     {
     }
 
-    template <NumberType A, NumberType B, NumberType X>
+    template <IsNumberT A, IsNumberT B, IsNumberT X>
     constexpr vec4(A _x, B _y, vec2<X> const &_zw)
         : x(static_cast<T>(_x)),
           y(static_cast<T>(_y)),
@@ -69,7 +69,7 @@ struct vec4 {
     {
     }
 
-    template <NumberType X, NumberType A>
+    template <IsNumberT X, IsNumberT A>
     constexpr vec4(vec3<X> const &_xyz, A _w)
         : x(static_cast<T>(_xyz.x)),
           y(static_cast<T>(_xyz.y)),
@@ -78,7 +78,7 @@ struct vec4 {
     {
     }
 
-    template <NumberType A, NumberType X>
+    template <IsNumberT A, IsNumberT X>
     constexpr vec4(A _x, vec3<X> const &_yzw)
         : x(static_cast<T>(_x)),
           y(static_cast<T>(_yzw.x)),
@@ -87,7 +87,7 @@ struct vec4 {
     {
     }
 
-    template <NumberType A, NumberType B>
+    template <IsNumberT A, IsNumberT B>
     constexpr vec4(vec2<A> const &_xy, vec2<B> const &_zw)
         : x(static_cast<T>(_xy.x)),
           y(static_cast<T>(_xy.y)),
@@ -95,7 +95,7 @@ struct vec4 {
           w(static_cast<T>(_zw.y))
     {
     }
-    template <NumberType X>
+    template <IsNumberT X>
     constexpr vec4(vec4<X> const &v)
         : x(static_cast<T>(v.x)),
           y(static_cast<T>(v.y)),
@@ -108,13 +108,13 @@ struct vec4 {
     static constexpr vec4 zero() { return vec4(static_cast<T>(0.0)); }
     static constexpr vec4 ones() { return vec4(static_cast<T>(1.0)); }
 
-    static constexpr std::size_t length() { return 4; }
+    static constexpr std::size_t componentCount() { return 4; }
     static constexpr std::size_t size() { return sizeof(vec4<T>); }
 
     // Component accesses
     constexpr T &operator[](uint32_t i)
     {
-        QM_ASSERT(i >= 0 && i < this->length());
+        QM_ASSERT(i >= 0 && i < this->componentCount());
         switch (i) {
             default:
             case 0:
@@ -130,7 +130,7 @@ struct vec4 {
 
     constexpr T operator[](uint32_t i) const
     {
-        QM_ASSERT(i >= 0 && i < this->length());
+        QM_ASSERT(i >= 0 && i < this->componentCount());
         switch (i) {
             default:
             case 0:
@@ -144,8 +144,61 @@ struct vec4 {
         }
     }
 
+    // Arithmetic Operators
+    vec4 operator+(const vec4 &other) const
+    {
+        return vec4(x + other.x, y + other.y, z + other.z, w + other.w);
+    }
+
+    vec4 operator-(const vec4 &other) const
+    {
+        return vec4(x - other.x, y - other.y, z - other.z, w - other.w);
+    }
+
+    vec4 operator*(float scalar) const
+    {
+        return vec4(x * scalar, y * scalar, z * scalar, w * scalar);
+    }
+
+    vec4 operator/(float scalar) const
+    {
+        if (scalar != 0.0f) {
+            return vec4(x / scalar, y / scalar, z / scalar, w / scalar);
+        }
+        else {
+            throw std::invalid_argument("Division by zero");
+        }
+    }
+
+    float length() const { return qm::sqrt(x * x + y * y + z * z + w * w); }
+
+    float lengthSquared() const { return (x * x + y * y + z * z + w * w); }
+
+    void normalize()
+    {
+        float len = length();
+        if (len != 0.0f) {
+            x /= len;
+            y /= len;
+            z /= len;
+            w /= len;
+        }
+    }
+
+    vec4 normalized() const
+    {
+        vec4 result(*this); // Create a copy
+        result.normalize();
+        return result;
+    }
+
+    float dot(const vec4 &other) const
+    {
+        return x * other.x + y * other.y + z * other.z + w * other.w;
+    }
+
     // Unary arithmetic operators
-    template <NumberType A>
+    template <IsNumberT A>
     constexpr vec4 &operator=(vec4<A> const &v)
     {
         this->x = static_cast<T>(v.x);
@@ -155,7 +208,7 @@ struct vec4 {
         return *this;
     }
 
-    template <NumberType A>
+    template <IsNumberT A>
     constexpr vec4 &operator+=(A scalar)
     {
         this->x += static_cast<T>(scalar);
@@ -165,7 +218,7 @@ struct vec4 {
         return *this;
     }
 
-    template <NumberType A>
+    template <IsNumberT A>
     constexpr vec4 &operator+=(vec4<A> const &v)
     {
         this->x += static_cast<T>(v.x);
@@ -175,7 +228,7 @@ struct vec4 {
         return *this;
     }
 
-    template <NumberType A>
+    template <IsNumberT A>
     constexpr vec4 &operator-=(A scalar)
     {
         this->x -= static_cast<T>(scalar);
@@ -185,7 +238,7 @@ struct vec4 {
         return *this;
     }
 
-    template <NumberType A>
+    template <IsNumberT A>
     constexpr vec4 &operator-=(vec4<A> const &v)
     {
         this->x -= static_cast<T>(v.x);
@@ -195,7 +248,7 @@ struct vec4 {
         return *this;
     }
 
-    template <NumberType A>
+    template <IsNumberT A>
     constexpr vec4 &operator*=(A scalar)
     {
         this->x *= static_cast<T>(scalar);
@@ -205,7 +258,7 @@ struct vec4 {
         return *this;
     }
 
-    template <NumberType A>
+    template <IsNumberT A>
     constexpr vec4 &operator*=(vec4<A> const &v)
     {
         this->x *= static_cast<T>(v.x);
@@ -215,7 +268,7 @@ struct vec4 {
         return *this;
     }
 
-    template <NumberType A>
+    template <IsNumberT A>
     constexpr vec4 &operator/=(A scalar)
     {
         this->x /= static_cast<T>(scalar);
@@ -225,7 +278,7 @@ struct vec4 {
         return *this;
     }
 
-    template <NumberType A>
+    template <IsNumberT A>
     constexpr vec4 &operator/=(vec4<A> const &v)
     {
         this->x /= static_cast<T>(v.x);
@@ -291,7 +344,7 @@ struct vec4 {
     }
 
     // Bitwise AND operator
-    template <IntegerType A>
+    template <IsIntegerT A>
     vec4 &operator&=(const vec4<A> &v)
     {
         x &= v.x;
@@ -301,7 +354,7 @@ struct vec4 {
         return *this;
     }
 
-    template <IntegerType A>
+    template <IsIntegerT A>
     vec4 &operator&=(A scalar)
     {
         x &= scalar;
@@ -312,7 +365,7 @@ struct vec4 {
     }
 
     // Bitwise OR operator
-    template <IntegerType A>
+    template <IsIntegerT A>
     vec4 &operator|=(const vec4<A> &v)
     {
         x |= v.x;
@@ -322,7 +375,7 @@ struct vec4 {
         return *this;
     }
 
-    template <IntegerType A>
+    template <IsIntegerT A>
     vec4 &operator|=(A scalar)
     {
         x |= scalar;
@@ -333,7 +386,7 @@ struct vec4 {
     }
 
     // Bitwise XOR operator
-    template <IntegerType A>
+    template <IsIntegerT A>
     vec4 &operator^=(const vec4<A> &v)
     {
         x ^= v.x;
@@ -343,7 +396,7 @@ struct vec4 {
         return *this;
     }
 
-    template <IntegerType A>
+    template <IsIntegerT A>
     vec4 &operator^=(A scalar)
     {
         x ^= scalar;
@@ -354,7 +407,7 @@ struct vec4 {
     }
 
     // Bitwise left shift operator
-    template <IntegerType A>
+    template <IsIntegerT A>
     vec4 &operator<<=(const vec4<A> &v)
     {
         x <<= v.x;
@@ -364,7 +417,7 @@ struct vec4 {
         return *this;
     }
 
-    template <IntegerType A>
+    template <IsIntegerT A>
     vec4 &operator<<=(A numBits)
     {
         x <<= numBits;
@@ -375,7 +428,7 @@ struct vec4 {
     }
 
     // Bitwise right shift operator
-    template <IntegerType A>
+    template <IsIntegerT A>
     vec4 &operator>>=(const vec4<A> &v)
     {
         x >>= v.x;
@@ -385,7 +438,7 @@ struct vec4 {
         return *this;
     }
 
-    template <IntegerType A>
+    template <IsIntegerT A>
     vec4 &operator>>=(A numBits)
     {
         x >>= numBits;
@@ -398,7 +451,7 @@ struct vec4 {
     // String / Print functions
     constexpr std::string toString() const
     {
-        if constexpr (FloatingPointType<decltype(x)>) {
+        if constexpr (IsFloatingPointT<decltype(x)>) {
             return std::format("vec4(x: {:.5f}, y: {:.5f}, z: {:.5f}, w: {:.5f})",
                                static_cast<double>(x), static_cast<double>(y),
                                static_cast<double>(z), static_cast<double>(w));
@@ -410,6 +463,43 @@ struct vec4 {
 
     void print() const { std::cout << toString() << '\n'; }
 };
+
+// Friend functions
+template <IsNumberT T>
+vec4<T> operator+(const vec4<T> &lhs, const vec4<T> &rhs)
+{
+    return vec4<T>(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z, lhs.w + rhs.w);
+}
+
+template <IsNumberT T>
+vec4<T> operator-(const vec4<T> &lhs, const vec4<T> &rhs)
+{
+    return vec4<T>(lhs.x - rhs.x, lhs.y - rhs.y, lhs.x - rhs.z, lhs.w - rhs.w);
+}
+
+template <IsNumberT T>
+vec4<T> operator/(const vec4<T> &vec, float scalar)
+{
+    if (scalar != 0.0f) {
+        return vec4<T>(vec.x / scalar, vec.y / scalar, vec.z / scalar, vec.w / scalar);
+    }
+    else {
+        throw std::invalid_argument("Division by zero");
+    }
+}
+
+template <IsNumberT T>
+vec4<T> operator*(const vec4<T> &vec, float scalar)
+{
+    return vec4<T>(vec.x * scalar, vec.y * scalar, vec.z * scalar, vec.w * scalar);
+}
+
+// Support commutative multiplication
+template <IsNumberT T>
+vec4<T> operator*(float scalar, const vec4<T> &vec)
+{
+    return vec4<T>(vec.x * scalar, vec.y * scalar, vec.z * scalar, vec.w * scalar);
+}
 
 using vec4f = vec4<float>;
 using vec4i = vec4<int>;

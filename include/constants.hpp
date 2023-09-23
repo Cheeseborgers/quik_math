@@ -7,13 +7,13 @@ namespace qm {
 /**
  * Value of Pi constant.
  */
-template <FloatingPointType T>
+template <IsFloatingPointT T>
 constexpr T pi{std::numbers::pi_v<T>};
 
 /**
  * A small positive value representing the machine epsilon.
  */
-template <FloatingPointType T>
+template <IsFloatingPointT T>
 constexpr float epsilon{std::numeric_limits<T>::epsilon()};
 
 } // namespace qm
