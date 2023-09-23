@@ -145,22 +145,22 @@ struct vec4 {
     }
 
     // Arithmetic Operators
-    vec4 operator+(const vec4 &other) const
+    constexpr vec4 operator+(const vec4 &other) const
     {
         return vec4(x + other.x, y + other.y, z + other.z, w + other.w);
     }
 
-    vec4 operator-(const vec4 &other) const
+    constexpr vec4 operator-(const vec4 &other) const
     {
         return vec4(x - other.x, y - other.y, z - other.z, w - other.w);
     }
 
-    vec4 operator*(float scalar) const
+    constexpr vec4 operator*(float scalar) const
     {
         return vec4(x * scalar, y * scalar, z * scalar, w * scalar);
     }
 
-    vec4 operator/(float scalar) const
+    constexpr vec4 operator/(float scalar) const
     {
         if (scalar != 0.0f) {
             return vec4(x / scalar, y / scalar, z / scalar, w / scalar);
@@ -170,11 +170,11 @@ struct vec4 {
         }
     }
 
-    float length() const { return qm::sqrt(x * x + y * y + z * z + w * w); }
+    constexpr float length() const { return qm::sqrt(x * x + y * y + z * z + w * w); }
 
-    float lengthSquared() const { return (x * x + y * y + z * z + w * w); }
+    constexpr float lengthSquared() const { return (x * x + y * y + z * z + w * w); }
 
-    void normalize()
+    constexpr void normalize()
     {
         float len = length();
         if (len != 0.0f) {
@@ -185,14 +185,14 @@ struct vec4 {
         }
     }
 
-    vec4 normalized() const
+    constexpr vec4 normalized() const
     {
         vec4 result(*this); // Create a copy
         result.normalize();
         return result;
     }
 
-    float dot(const vec4 &other) const
+    constexpr float dot(const vec4 &other) const
     {
         return x * other.x + y * other.y + z * other.z + w * other.w;
     }
@@ -290,7 +290,7 @@ struct vec4 {
 
     // Increment and decrement operators
 
-    vec4 &operator++()
+    constexpr vec4 &operator++()
     {
         ++this->x;
         ++this->y;
@@ -299,7 +299,7 @@ struct vec4 {
         return *this;
     }
 
-    vec4 &operator--()
+    constexpr vec4 &operator--()
     {
         --this->x;
         --this->y;
@@ -308,14 +308,14 @@ struct vec4 {
         return *this;
     }
 
-    vec4 operator++(int)
+    constexpr vec4 operator++(int)
     {
         vec4 result(*this);
         ++*this;
         return result;
     }
 
-    vec4 operator--(int)
+    constexpr vec4 operator--(int)
     {
         vec4 result(*this);
         --*this;
@@ -325,7 +325,7 @@ struct vec4 {
     // Compound assignment operators
 
     // Modulus operator
-    vec4 &operator%=(const vec4 &v)
+    constexpr vec4 &operator%=(const vec4 &v)
     {
         x %= v.x;
         y %= v.y;
@@ -334,7 +334,7 @@ struct vec4 {
         return *this;
     }
 
-    vec4 &operator%=(T scalar)
+    constexpr vec4 &operator%=(T scalar)
     {
         x %= scalar;
         y %= scalar;
@@ -345,7 +345,7 @@ struct vec4 {
 
     // Bitwise AND operator
     template <IsIntegerT A>
-    vec4 &operator&=(const vec4<A> &v)
+    constexpr vec4 &operator&=(const vec4<A> &v)
     {
         x &= v.x;
         y &= v.y;
@@ -355,7 +355,7 @@ struct vec4 {
     }
 
     template <IsIntegerT A>
-    vec4 &operator&=(A scalar)
+    constexpr vec4 &operator&=(A scalar)
     {
         x &= scalar;
         y &= scalar;
@@ -366,7 +366,7 @@ struct vec4 {
 
     // Bitwise OR operator
     template <IsIntegerT A>
-    vec4 &operator|=(const vec4<A> &v)
+    constexpr vec4 &operator|=(const vec4<A> &v)
     {
         x |= v.x;
         y |= v.y;
@@ -376,7 +376,7 @@ struct vec4 {
     }
 
     template <IsIntegerT A>
-    vec4 &operator|=(A scalar)
+    constexpr vec4 &operator|=(A scalar)
     {
         x |= scalar;
         y |= scalar;
@@ -387,7 +387,7 @@ struct vec4 {
 
     // Bitwise XOR operator
     template <IsIntegerT A>
-    vec4 &operator^=(const vec4<A> &v)
+    constexpr vec4 &operator^=(const vec4<A> &v)
     {
         x ^= v.x;
         y ^= v.y;
@@ -397,7 +397,7 @@ struct vec4 {
     }
 
     template <IsIntegerT A>
-    vec4 &operator^=(A scalar)
+    constexpr vec4 &operator^=(A scalar)
     {
         x ^= scalar;
         y ^= scalar;
@@ -408,7 +408,7 @@ struct vec4 {
 
     // Bitwise left shift operator
     template <IsIntegerT A>
-    vec4 &operator<<=(const vec4<A> &v)
+    constexpr vec4 &operator<<=(const vec4<A> &v)
     {
         x <<= v.x;
         y <<= v.y;
@@ -418,7 +418,7 @@ struct vec4 {
     }
 
     template <IsIntegerT A>
-    vec4 &operator<<=(A numBits)
+    constexpr vec4 &operator<<=(A numBits)
     {
         x <<= numBits;
         y <<= numBits;
@@ -429,7 +429,7 @@ struct vec4 {
 
     // Bitwise right shift operator
     template <IsIntegerT A>
-    vec4 &operator>>=(const vec4<A> &v)
+    constexpr vec4 &operator>>=(const vec4<A> &v)
     {
         x >>= v.x;
         y >>= v.y;
@@ -439,13 +439,56 @@ struct vec4 {
     }
 
     template <IsIntegerT A>
-    vec4 &operator>>=(A numBits)
+    constexpr vec4 &operator>>=(A numBits)
     {
         x >>= numBits;
         y >>= numBits;
         z >>= numBits;
         w >>= numBits;
         return *this;
+    }
+
+    // Comparison Operators
+    template <IsNumberT A>
+    constexpr bool operator==(const vec4<A> &v)
+    {
+        return this->x == v.x && this->y == v.y && this->z == v.z && this->w == v.w;
+    }
+
+    template <IsNumberT A>
+    constexpr bool operator!=(const vec4<A> &v)
+    {
+        return !(this == v);
+    }
+
+    template <IsNumberT A>
+    constexpr bool operator<(const vec4<A> &v)
+    {
+        if (this->x != v.x)
+            return this->x < v.x;
+        if (this->y != v.y)
+            return this->y < v.y;
+        if (this->z != v.z)
+            return this->z < v.z;
+        return this->w < v.w;
+    }
+
+    template <IsNumberT A>
+    constexpr bool operator<=(const vec4<A> &v)
+    {
+        return !(this < v);
+    }
+
+    template <IsNumberT A>
+    constexpr bool operator>(const vec4<A> &v)
+    {
+        return this < v;
+    }
+
+    template <IsNumberT A>
+    constexpr bool operator>=(const vec4<A> &v)
+    {
+        return !(this < v);
     }
 
     // String / Print functions
@@ -466,19 +509,19 @@ struct vec4 {
 
 // Friend functions
 template <IsNumberT T>
-vec4<T> operator+(const vec4<T> &lhs, const vec4<T> &rhs)
+constexpr vec4<T> operator+(const vec4<T> &lhs, const vec4<T> &rhs)
 {
     return vec4<T>(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z, lhs.w + rhs.w);
 }
 
 template <IsNumberT T>
-vec4<T> operator-(const vec4<T> &lhs, const vec4<T> &rhs)
+constexpr vec4<T> operator-(const vec4<T> &lhs, const vec4<T> &rhs)
 {
     return vec4<T>(lhs.x - rhs.x, lhs.y - rhs.y, lhs.x - rhs.z, lhs.w - rhs.w);
 }
 
 template <IsNumberT T>
-vec4<T> operator/(const vec4<T> &vec, float scalar)
+constexpr vec4<T> operator/(const vec4<T> &vec, float scalar)
 {
     if (scalar != 0.0f) {
         return vec4<T>(vec.x / scalar, vec.y / scalar, vec.z / scalar, vec.w / scalar);
@@ -489,16 +532,90 @@ vec4<T> operator/(const vec4<T> &vec, float scalar)
 }
 
 template <IsNumberT T>
-vec4<T> operator*(const vec4<T> &vec, float scalar)
+constexpr vec4<T> operator*(const vec4<T> &vec, float scalar)
 {
     return vec4<T>(vec.x * scalar, vec.y * scalar, vec.z * scalar, vec.w * scalar);
 }
 
 // Support commutative multiplication
 template <IsNumberT T>
-vec4<T> operator*(float scalar, const vec4<T> &vec)
+constexpr vec4<T> operator*(float scalar, const vec4<T> &vec)
 {
     return vec4<T>(vec.x * scalar, vec.y * scalar, vec.z * scalar, vec.w * scalar);
+}
+
+// Comparison Operators
+template <IsNumberT T>
+constexpr bool operator==(const vec4<T> &lhs, const vec4<T> &rhs)
+{
+    return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z && lhs.w == rhs.w;
+}
+
+template <IsNumberT T>
+constexpr bool operator!=(const vec4<T> &lhs, const vec4<T> &rhs)
+{
+    return !(lhs == rhs);
+}
+
+template <IsNumberT T>
+constexpr bool operator<(const vec4<T> &lhs, const vec4<T> &rhs)
+{
+    if (lhs.x != rhs.x)
+        return lhs.x < rhs.x;
+    if (lhs.y != rhs.y)
+        return lhs.y < rhs.y;
+    if (lhs.z != rhs.z)
+        return lhs.z < rhs.z;
+    return lhs.w < rhs.w;
+}
+
+template <IsNumberT T>
+constexpr bool operator<=(const vec4<T> &lhs, const vec4<T> &rhs)
+{
+    return !(rhs < lhs);
+}
+
+template <IsNumberT T>
+constexpr bool operator>(const vec4<T> &lhs, const vec4<T> &rhs)
+{
+    return rhs < lhs;
+}
+
+template <IsNumberT T>
+constexpr bool operator>=(const vec4<T> &lhs, const vec4<T> &rhs)
+{
+    return !(lhs < rhs);
+}
+
+// Swizzle Operators
+template <IsNumberT T>
+constexpr vec4<T> wzyx(const vec4<T> &v)
+{
+    return vec4<T>(v.w, v.z, v.x, v.y);
+}
+
+template <IsNumberT T>
+constexpr vec4<T> xxxx(const vec4<T> &v)
+{
+    return vec4<T>(v.x, v.x, v.x, v.x);
+}
+
+template <IsNumberT T>
+constexpr vec4<T> yyyy(const vec4<T> &v)
+{
+    return vec4<T>(v.y, v.y, v.y, v.y);
+}
+
+template <IsNumberT T>
+constexpr vec4<T> zzzz(const vec4<T> &v)
+{
+    return vec4<T>(v.z, v.z, v.z, v.z);
+}
+
+template <IsNumberT T>
+constexpr vec4<T> wwww(const vec4<T> &v)
+{
+    return vec4<T>(v.w, v.w, v.w, v.w);
 }
 
 using vec4f = vec4<float>;

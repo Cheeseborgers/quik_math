@@ -82,13 +82,13 @@ struct vec2 {
     }
 
     // Arithmetic Operators
-    vec2 operator+(const vec2 &other) const { return vec2(x + other.x, y + other.y); }
+    constexpr vec2 operator+(const vec2 &other) const { return vec2(x + other.x, y + other.y); }
 
-    vec2 operator-(const vec2 &other) const { return vec2(x - other.x, y - other.y); }
+    constexpr vec2 operator-(const vec2 &other) const { return vec2(x - other.x, y - other.y); }
 
-    vec2 operator*(float scalar) const { return vec2(x * scalar, y * scalar); }
+    constexpr vec2 operator*(float scalar) const { return vec2(x * scalar, y * scalar); }
 
-    vec2 operator/(float scalar) const
+    constexpr vec2 operator/(float scalar) const
     {
         if (scalar != 0.0f) {
             return vec2(x / scalar, y / scalar);
@@ -98,11 +98,11 @@ struct vec2 {
         }
     }
 
-    float length() const { return qm::sqrt(x * x + y * y); }
+    constexpr float length() const { return qm::sqrt(x * x + y * y); }
 
-    float lengthSquared() const { return (x * x + y * y); }
+    constexpr float lengthSquared() const { return (x * x + y * y); }
 
-    void normalize()
+    constexpr void normalize()
     {
         float len = length();
         if (len != 0.0f) {
@@ -111,14 +111,14 @@ struct vec2 {
         }
     }
 
-    vec2 normalized() const
+    constexpr vec2 normalized() const
     {
         vec2 result(*this); // Create a copy
         result.normalize();
         return result;
     }
 
-    float dot(const vec2 &other) const { return x * other.x + y * other.y; }
+    constexpr float dot(const vec2 &other) const { return x * other.x + y * other.y; }
 
     // Unary arithmetic operators
     template <IsNumberT A>
@@ -194,28 +194,28 @@ struct vec2 {
     }
 
     // Increment and decrement operators
-    vec2 &operator++()
+    constexpr vec2 &operator++()
     {
         ++this->x;
         ++this->y;
         return *this;
     }
 
-    vec2 &operator--()
+    constexpr vec2 &operator--()
     {
         --this->x;
         --this->y;
         return *this;
     }
 
-    vec2 operator++(int)
+    constexpr vec2 operator++(int)
     {
         vec2 result(*this);
         ++*this;
         return result;
     }
 
-    vec2 operator--(int)
+    constexpr vec2 operator--(int)
     {
         vec2 result(*this);
         --*this;
@@ -225,14 +225,14 @@ struct vec2 {
     // Compound assignment operators
 
     // Modulus operator
-    vec2 &operator%=(const vec2 &v)
+    constexpr vec2 &operator%=(const vec2 &v)
     {
         x %= v.x;
         y %= v.y;
         return *this;
     }
 
-    vec2 &operator%=(T scalar)
+    constexpr vec2 &operator%=(T scalar)
     {
         x %= scalar;
         y %= scalar;
@@ -241,7 +241,7 @@ struct vec2 {
 
     // Bitwise AND operator
     template <IsIntegerT A>
-    vec2 &operator&=(const vec2<A> &v)
+    constexpr vec2 &operator&=(const vec2<A> &v)
     {
         x &= v.x;
         y &= v.y;
@@ -249,7 +249,7 @@ struct vec2 {
     }
 
     template <IsIntegerT A>
-    vec2 &operator&=(A scalar)
+    constexpr vec2 &operator&=(A scalar)
     {
         x &= scalar;
         y &= scalar;
@@ -258,7 +258,7 @@ struct vec2 {
 
     // Bitwise OR operator
     template <IsIntegerT A>
-    vec2 &operator|=(const vec2<A> &v)
+    constexpr vec2 &operator|=(const vec2<A> &v)
     {
         x |= v.x;
         y |= v.y;
@@ -266,7 +266,7 @@ struct vec2 {
     }
 
     template <IsIntegerT A>
-    vec2 &operator|=(A scalar)
+    constexpr vec2 &operator|=(A scalar)
     {
         x |= scalar;
         y |= scalar;
@@ -275,7 +275,7 @@ struct vec2 {
 
     // Bitwise XOR operator
     template <IsIntegerT A>
-    vec2 &operator^=(const vec2<A> &v)
+    constexpr vec2 &operator^=(const vec2<A> &v)
     {
         x ^= v.x;
         y ^= v.y;
@@ -283,7 +283,7 @@ struct vec2 {
     }
 
     template <IsIntegerT A>
-    vec2 &operator^=(A scalar)
+    constexpr vec2 &operator^=(A scalar)
     {
         x ^= scalar;
         y ^= scalar;
@@ -292,7 +292,7 @@ struct vec2 {
 
     // Bitwise left shift operator
     template <IsIntegerT A>
-    vec2 &operator<<=(const vec2<A> &v)
+    constexpr vec2 &operator<<=(const vec2<A> &v)
     {
         x <<= v.x;
         y <<= v.y;
@@ -300,7 +300,7 @@ struct vec2 {
     }
 
     template <IsIntegerT A>
-    vec2 &operator<<=(A numBits)
+    constexpr vec2 &operator<<=(A numBits)
     {
         x <<= numBits;
         y <<= numBits;
@@ -309,7 +309,7 @@ struct vec2 {
 
     // Bitwise right shift operator
     template <IsIntegerT A>
-    vec2 &operator>>=(const vec2<A> &v)
+    constexpr vec2 &operator>>=(const vec2<A> &v)
     {
         x >>= v.x;
         y >>= v.y;
@@ -317,11 +317,50 @@ struct vec2 {
     }
 
     template <IsIntegerT A>
-    vec2 &operator>>=(A numBits)
+    constexpr vec2 &operator>>=(A numBits)
     {
         x >>= numBits;
         y >>= numBits;
         return *this;
+    }
+
+    // Comparison Operators
+    template <IsNumberT A>
+    constexpr bool operator==(const vec2<A> &v)
+    {
+        return this->x == v.x && this->y == v.y;
+    }
+
+    template <IsNumberT A>
+    constexpr bool operator!=(const vec2<A> &v)
+    {
+        return !(this == v);
+    }
+
+    template <IsNumberT A>
+    constexpr bool operator<(const vec2<A> &v)
+    {
+        if (this->x != v.x)
+            return this->x < v.x;
+        return this->y < v.y;
+    }
+
+    template <IsNumberT A>
+    constexpr bool operator<=(const vec2<A> &v)
+    {
+        return !(this < v);
+    }
+
+    template <IsNumberT A>
+    constexpr bool operator>(const vec2<A> &v)
+    {
+        return this < v;
+    }
+
+    template <IsNumberT A>
+    constexpr bool operator>=(const vec2<A> &v)
+    {
+        return !(this < v);
     }
 
     // String / Print functions
@@ -341,19 +380,19 @@ struct vec2 {
 
 // Friend fuctions
 template <IsNumberT T>
-vec2<T> operator+(const vec2<T> &lhs, const vec2<T> &rhs)
+constexpr vec2<T> operator+(const vec2<T> &lhs, const vec2<T> &rhs)
 {
     return vec2<T>(lhs.x + rhs.x, lhs.y + rhs.y);
 }
 
 template <IsNumberT T>
-vec2<T> operator-(const vec2<T> &lhs, const vec2<T> &rhs)
+constexpr vec2<T> operator-(const vec2<T> &lhs, const vec2<T> &rhs)
 {
     return vec2<T>(lhs.x - rhs.x, lhs.y - rhs.y);
 }
 
 template <IsNumberT T>
-vec2<T> operator/(const vec2<T> &vec, float scalar)
+constexpr vec2<T> operator/(const vec2<T> &vec, float scalar)
 {
     if (scalar != 0.0f) {
         return vec2<T>(vec.x / scalar, vec.y / scalar);
@@ -364,16 +403,74 @@ vec2<T> operator/(const vec2<T> &vec, float scalar)
 }
 
 template <IsNumberT T>
-vec2<T> operator*(const vec2<T> &vec, float scalar)
+constexpr vec2<T> operator*(const vec2<T> &vec, float scalar)
 {
     return vec2<T>(vec.x * scalar, vec.y * scalar);
 }
 
 // Support commutative multiplication
 template <IsNumberT T>
-vec2<T> operator*(float scalar, const vec2<T> &vec)
+constexpr vec2<T> operator*(float scalar, const vec2<T> &vec)
 {
     return vec2<T>(vec.x * scalar, vec.y * scalar);
+}
+
+// Comparison Operators
+template <IsNumberT T>
+constexpr bool operator==(const vec2<T> &lhs, const vec2<T> &rhs)
+{
+    return lhs.x == rhs.x && lhs.y == rhs.y;
+}
+
+template <IsNumberT T>
+constexpr bool operator!=(const vec2<T> &lhs, const vec2<T> &rhs)
+{
+    return !(lhs == rhs);
+}
+
+template <IsNumberT T>
+constexpr bool operator<(const vec2<T> &lhs, const vec2<T> &rhs)
+{
+    if (lhs.x != rhs.x)
+        return lhs.x < rhs.x;
+    return lhs.y < rhs.y;
+}
+
+template <IsNumberT T>
+constexpr bool operator<=(const vec2<T> &lhs, const vec2<T> &rhs)
+{
+    return !(rhs < lhs);
+}
+
+template <IsNumberT T>
+constexpr bool operator>(const vec2<T> &lhs, const vec2<T> &rhs)
+{
+    return rhs < lhs;
+}
+
+template <IsNumberT T>
+constexpr bool operator>=(const vec2<T> &lhs, const vec2<T> &rhs)
+{
+    return !(lhs < rhs);
+}
+
+// Swizzle Operators
+template <IsNumberT T>
+vec2<T> xx(const vec2<T> &v)
+{
+    return vec2<T>(v.x, v.x);
+}
+
+template <IsNumberT T>
+vec2<T> yy(const vec2<T> &v)
+{
+    return vec2<T>(v.y, v.y);
+}
+
+template <IsNumberT T>
+vec2<T> yx(const vec2<T> &v)
+{
+    return vec2<T>(v.y, v.x);
 }
 
 using vec2f = vec2<float>;

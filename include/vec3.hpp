@@ -95,13 +95,22 @@ struct vec3 {
         }
     }
     // Arithmetic Operators
-    vec3 operator+(const vec3 &other) const { return vec3(x + other.x, y + other.y, z + other.z); }
+    constexpr vec3 operator+(const vec3 &other) const
+    {
+        return vec3(x + other.x, y + other.y, z + other.z);
+    }
 
-    vec3 operator-(const vec3 &other) const { return vec3(x - other.x, y - other.y, z - other.z); }
+    constexpr vec3 operator-(const vec3 &other) const
+    {
+        return vec3(x - other.x, y - other.y, z - other.z);
+    }
 
-    vec3 operator*(float scalar) const { return vec3(x * scalar, y * scalar, z * scalar); }
+    constexpr vec3 operator*(float scalar) const
+    {
+        return vec3(x * scalar, y * scalar, z * scalar);
+    }
 
-    vec3 operator/(float scalar) const
+    constexpr vec3 operator/(float scalar) const
     {
         if (scalar != 0.0f) {
             return vec3(x / scalar, y / scalar, z / scalar);
@@ -111,9 +120,9 @@ struct vec3 {
         }
     }
 
-    float length() const { return qm::sqrt(x * x + y * y + z * z); }
+    constexpr float length() const { return qm::sqrt(x * x + y * y + z * z); }
 
-    float lengthSquared() const { return (x * x + y * y + z * z); }
+    constexpr float lengthSquared() const { return (x * x + y * y + z * z); }
 
     void normalize()
     {
@@ -125,14 +134,14 @@ struct vec3 {
         }
     }
 
-    vec3 normalized() const
+    constexpr vec3 normalized() const
     {
         vec3 result(*this); // Create a copy
         result.normalize();
         return result;
     }
 
-    float dot(const vec3 &other) const { return x * other.x + y * other.y + z * other.z; }
+    constexpr float dot(const vec3 &other) const { return x * other.x + y * other.y + z * other.z; }
 
     // Unary arithmetic operators
     template <IsNumberT A>
@@ -218,7 +227,7 @@ struct vec3 {
 
     // Increment and decrement operators
 
-    vec3 &operator++()
+    constexpr vec3 &operator++()
     {
         ++this->x;
         ++this->y;
@@ -226,7 +235,7 @@ struct vec3 {
         return *this;
     }
 
-    vec3 &operator--()
+    constexpr vec3 &operator--()
     {
         --this->x;
         --this->y;
@@ -234,14 +243,14 @@ struct vec3 {
         return *this;
     }
 
-    vec3 operator++(int)
+    constexpr vec3 operator++(int)
     {
         vec3 result(*this);
         ++*this;
         return result;
     }
 
-    vec3 operator--(int)
+    constexpr vec3 operator--(int)
     {
         vec3 result(*this);
         --*this;
@@ -251,7 +260,7 @@ struct vec3 {
     // Compound assignment operators
 
     // Modulus operator
-    vec3 &operator%=(const vec3 &v)
+    constexpr vec3 &operator%=(const vec3 &v)
     {
         x %= v.x;
         y %= v.y;
@@ -259,7 +268,7 @@ struct vec3 {
         return *this;
     }
 
-    vec3 &operator%=(T scalar)
+    constexpr vec3 &operator%=(T scalar)
     {
         x %= scalar;
         y %= scalar;
@@ -269,7 +278,7 @@ struct vec3 {
 
     // Bitwise AND operator
     template <IsIntegerT A>
-    vec3 &operator&=(const vec3<A> &v)
+    constexpr vec3 &operator&=(const vec3<A> &v)
     {
         x &= v.x;
         y &= v.y;
@@ -278,7 +287,7 @@ struct vec3 {
     }
 
     template <IsIntegerT A>
-    vec3 &operator&=(A scalar)
+    constexpr vec3 &operator&=(A scalar)
     {
         x &= scalar;
         y &= scalar;
@@ -288,7 +297,7 @@ struct vec3 {
 
     // Bitwise OR operator
     template <IsIntegerT A>
-    vec3 &operator|=(const vec3<A> &v)
+    constexpr vec3 &operator|=(const vec3<A> &v)
     {
         x |= v.x;
         y |= v.y;
@@ -297,7 +306,7 @@ struct vec3 {
     }
 
     template <IsIntegerT A>
-    vec3 &operator|=(A scalar)
+    constexpr vec3 &operator|=(A scalar)
     {
         x |= scalar;
         y |= scalar;
@@ -307,7 +316,7 @@ struct vec3 {
 
     // Bitwise XOR operator
     template <IsIntegerT A>
-    vec3 &operator^=(const vec3<A> &v)
+    constexpr vec3 &operator^=(const vec3<A> &v)
     {
         x ^= v.x;
         y ^= v.y;
@@ -316,7 +325,7 @@ struct vec3 {
     }
 
     template <IsIntegerT A>
-    vec3 &operator^=(A scalar)
+    constexpr vec3 &operator^=(A scalar)
     {
         x ^= scalar;
         y ^= scalar;
@@ -326,7 +335,7 @@ struct vec3 {
 
     // Bitwise left shift operator
     template <IsIntegerT A>
-    vec3 &operator<<=(const vec3<A> &v)
+    constexpr vec3 &operator<<=(const vec3<A> &v)
     {
         x <<= v.x;
         y <<= v.y;
@@ -335,7 +344,7 @@ struct vec3 {
     }
 
     template <IsIntegerT A>
-    vec3 &operator<<=(A numBits)
+    constexpr vec3 &operator<<=(A numBits)
     {
         x <<= numBits;
         y <<= numBits;
@@ -345,7 +354,7 @@ struct vec3 {
 
     // Bitwise right shift operator
     template <IsIntegerT A>
-    vec3 &operator>>=(const vec2<A> &v)
+    constexpr vec3 &operator>>=(const vec2<A> &v)
     {
         x >>= v.x;
         y >>= v.y;
@@ -354,12 +363,53 @@ struct vec3 {
     }
 
     template <IsIntegerT A>
-    vec3 &operator>>=(A numBits)
+    constexpr vec3 &operator>>=(A numBits)
     {
         x >>= numBits;
         y >>= numBits;
         z >>= numBits;
         return *this;
+    }
+
+    // Comparison Operators
+    template <IsNumberT A>
+    constexpr bool operator==(const vec3<A> &v)
+    {
+        return this->x == v.x && this->y == v.y && this->z == v.z;
+    }
+
+    template <IsNumberT A>
+    constexpr bool operator!=(const vec3<A> &v)
+    {
+        return !(this == v);
+    }
+
+    template <IsNumberT A>
+    constexpr bool operator<(const vec3<A> &v)
+    {
+        if (this->x != v.x)
+            return this->x < v.x;
+        if (this->y != v.y)
+            return this->y < v.y;
+        return this->z < v.z;
+    }
+
+    template <IsNumberT A>
+    constexpr bool operator<=(const vec3<A> &v)
+    {
+        return !(this < v);
+    }
+
+    template <IsNumberT A>
+    constexpr bool operator>(const vec3<A> &v)
+    {
+        return this < v;
+    }
+
+    template <IsNumberT A>
+    constexpr bool operator>=(const vec3<A> &v)
+    {
+        return !(this < v);
     }
 
     // String / Print functions
@@ -379,19 +429,19 @@ struct vec3 {
 
 // Friend fuctions
 template <IsNumberT T>
-vec3<T> operator+(const vec3<T> &lhs, const vec3<T> &rhs)
+constexpr vec3<T> operator+(const vec3<T> &lhs, const vec3<T> &rhs)
 {
     return vec3<T>(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z);
 }
 
 template <IsNumberT T>
-vec3<T> operator-(const vec3<T> &lhs, const vec3<T> &rhs)
+constexpr vec3<T> operator-(const vec3<T> &lhs, const vec3<T> &rhs)
 {
     return vec3<T>(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z);
 }
 
 template <IsNumberT T>
-vec3<T> operator/(const vec3<T> &vec, float scalar)
+constexpr vec3<T> operator/(const vec3<T> &vec, float scalar)
 {
     if (scalar != 0.0f) {
         return vec3<T>(vec.x / scalar, vec.y / scalar, vec.z / scalar);
@@ -402,16 +452,88 @@ vec3<T> operator/(const vec3<T> &vec, float scalar)
 }
 
 template <IsNumberT T>
-vec3<T> operator*(const vec3<T> &vec, float scalar)
+constexpr vec3<T> operator*(const vec3<T> &vec, float scalar)
 {
     return vec3<T>(vec.x * scalar, vec.y * scalar, vec.z * scalar);
 }
 
 // Support commutative multiplication
 template <IsNumberT T>
-vec3<T> operator*(float scalar, const vec3<T> &vec)
+constexpr vec3<T> operator*(float scalar, const vec3<T> &vec)
 {
     return vec3<T>(vec.x * scalar, vec.y * scalar, vec.z * scalar);
+}
+
+// Comparison Operators
+template <IsNumberT T>
+constexpr bool operator==(const vec3<T> &lhs, const vec3<T> &rhs)
+{
+    return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
+}
+
+template <IsNumberT T>
+constexpr bool operator!=(const vec3<T> &lhs, const vec3<T> &rhs)
+{
+    return !(lhs == rhs);
+}
+
+template <IsNumberT T>
+constexpr bool operator<(const vec3<T> &lhs, const vec3<T> &rhs)
+{
+    if (lhs.x != rhs.x)
+        return lhs.x < rhs.x;
+    if (lhs.y != rhs.y)
+        return lhs.y < rhs.y;
+    return lhs.z < rhs.z;
+}
+
+template <IsNumberT T>
+constexpr bool operator<=(const vec3<T> &lhs, const vec3<T> &rhs)
+{
+    return !(rhs < lhs);
+}
+
+template <IsNumberT T>
+constexpr bool operator>(const vec3<T> &lhs, const vec3<T> &rhs)
+{
+    return rhs < lhs;
+}
+
+template <IsNumberT T>
+constexpr bool operator>=(const vec3<T> &lhs, const vec3<T> &rhs)
+{
+    return !(lhs < rhs);
+}
+
+// Swizzle Operators
+template <IsNumberT T>
+vec3<T> zyx(const vec3<T> &v)
+{
+    return vec3<T>(v.z, v.y, v.x);
+}
+
+template <IsNumberT T>
+vec3<T> wxy(const vec3<T> &v)
+{
+    return vec3<T>(v.w, v.x, v.y);
+}
+
+template <IsNumberT T>
+vec3<T> xxx(const vec3<T> &v)
+{
+    return vec3<T>(v.x, v.x, v.x);
+}
+
+template <IsNumberT T>
+vec3<T> yyy(const vec3<T> &v)
+{
+    return vec3<T>(v.y, v.y, v.y);
+}
+
+template <IsNumberT T>
+vec3<T> zzz(const vec3<T> &v)
+{
+    return vec3<T>(v.z, v.z, v.z);
 }
 
 using vec3f = vec3<float>;
