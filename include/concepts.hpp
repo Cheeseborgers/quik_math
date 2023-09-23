@@ -8,7 +8,7 @@
  * @tparam T The type to check.
  */
 template <typename T>
-concept FloatingPointType = std::is_floating_point_v<T>;
+concept FloatingPointType = std::numeric_limits<T>::is_iec559;
 
 /**
  * @brief Concept that checks if a type is a integral type.
