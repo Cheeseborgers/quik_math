@@ -143,6 +143,13 @@ struct vec3 {
 
     constexpr float dot(const vec3 &other) const { return x * other.x + y * other.y + z * other.z; }
 
+    // Cross Product (Vector Product)
+    vec3<float> cross(const vec3<T> &v) const
+    {
+        static_assert(IsFloatVec<T, 3>, "Input vector must be a float vector of size 3.");
+        return vec3<float>((y * v.z) - (z * v.y), (z * v.x) - (x * v.z), (x * v.y) - (y * v.x));
+    }
+
     // Unary arithmetic operators
     template <IsNumberT A>
     constexpr vec3 &operator=(vec3<A> const &v)
@@ -507,31 +514,31 @@ constexpr bool operator>=(const vec3<T> &lhs, const vec3<T> &rhs)
 
 // Swizzle Operators
 template <IsNumberT T>
-vec3<T> zyx(const vec3<T> &v)
+constexpr vec3<T> zyx(const vec3<T> &v)
 {
     return vec3<T>(v.z, v.y, v.x);
 }
 
 template <IsNumberT T>
-vec3<T> wxy(const vec3<T> &v)
+constexpr vec3<T> wxy(const vec3<T> &v)
 {
     return vec3<T>(v.w, v.x, v.y);
 }
 
 template <IsNumberT T>
-vec3<T> xxx(const vec3<T> &v)
+constexpr vec3<T> xxx(const vec3<T> &v)
 {
     return vec3<T>(v.x, v.x, v.x);
 }
 
 template <IsNumberT T>
-vec3<T> yyy(const vec3<T> &v)
+constexpr vec3<T> yyy(const vec3<T> &v)
 {
     return vec3<T>(v.y, v.y, v.y);
 }
 
 template <IsNumberT T>
-vec3<T> zzz(const vec3<T> &v)
+constexpr vec3<T> zzz(const vec3<T> &v)
 {
     return vec3<T>(v.z, v.z, v.z);
 }

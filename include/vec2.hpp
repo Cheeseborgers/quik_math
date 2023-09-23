@@ -456,19 +456,19 @@ constexpr bool operator>=(const vec2<T> &lhs, const vec2<T> &rhs)
 
 // Swizzle Operators
 template <IsNumberT T>
-vec2<T> xx(const vec2<T> &v)
+constexpr vec2<T> xx(const vec2<T> &v)
 {
     return vec2<T>(v.x, v.x);
 }
 
 template <IsNumberT T>
-vec2<T> yy(const vec2<T> &v)
+constexpr vec2<T> yy(const vec2<T> &v)
 {
     return vec2<T>(v.y, v.y);
 }
 
 template <IsNumberT T>
-vec2<T> yx(const vec2<T> &v)
+constexpr vec2<T> yx(const vec2<T> &v)
 {
     return vec2<T>(v.y, v.x);
 }

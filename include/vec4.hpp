@@ -192,9 +192,17 @@ struct vec4 {
         return result;
     }
 
-    constexpr float dot(const vec4 &other) const
+    template <IsNumberT A>
+    constexpr float dot(const vec4<A> &other) const
     {
         return x * other.x + y * other.y + z * other.z + w * other.w;
+    }
+
+    // Hadamard Product (Component-wise Multiplication)
+    template <IsNumberT A>
+    constexpr vec4<T> hadamard(const vec4<A> &v) const
+    {
+        return vec4<T>(x * v.x, y * v.y, z * v.z, w * v.w);
     }
 
     // Unary arithmetic operators
