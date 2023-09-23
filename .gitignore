@@ -4,6 +4,8 @@
 **/logs/
 **/profiling/
 
+GLSLangSpec.4.20.pdf
+
 # ignore an entire directory
 /bin/
 .idea/
