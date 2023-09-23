@@ -3,7 +3,6 @@
 
 #include "concepts.hpp"
 #include "functions.hpp"
-#include <string>
 
 template <IsNumberT T>
 struct vec2;
