@@ -96,86 +96,86 @@ struct vec3 {
     }
 
     // Unary arithmetic operators
-	template<NumberType A>
-	constexpr vec3 & operator=(vec3<A> const& v)
-	{
-		this->x = static_cast<T>(v.x);
-		this->y = static_cast<T>(v.y);
+    template <NumberType A>
+    constexpr vec3 &operator=(vec3<A> const &v)
+    {
+        this->x = static_cast<T>(v.x);
+        this->y = static_cast<T>(v.y);
         this->z = static_cast<T>(v.z);
-		return *this;
-	}
+        return *this;
+    }
 
-	template<NumberType A>
-	constexpr vec3 & operator+=(A scalar)
-	{
-		this->x += static_cast<T>(scalar);
-		this->y += static_cast<T>(scalar);
+    template <NumberType A>
+    constexpr vec3 &operator+=(A scalar)
+    {
+        this->x += static_cast<T>(scalar);
+        this->y += static_cast<T>(scalar);
         this->z += static_cast<T>(scalar);
-		return *this;
-	}
+        return *this;
+    }
 
-	template<NumberType A>
-	constexpr vec3 & operator+=(vec3<A> const& v)
-	{
-		this->x += static_cast<T>(v.x);
-		this->y += static_cast<T>(v.y);
+    template <NumberType A>
+    constexpr vec3 &operator+=(vec3<A> const &v)
+    {
+        this->x += static_cast<T>(v.x);
+        this->y += static_cast<T>(v.y);
         this->z += static_cast<T>(v.z);
-		return *this;
-	}
+        return *this;
+    }
 
-	template<NumberType A>
-	constexpr vec3 & operator-=(A scalar)
-	{
-		this->x -= static_cast<T>(scalar);
-		this->y -= static_cast<T>(scalar);
+    template <NumberType A>
+    constexpr vec3 &operator-=(A scalar)
+    {
+        this->x -= static_cast<T>(scalar);
+        this->y -= static_cast<T>(scalar);
         this->z -= static_cast<T>(scalar);
-		return *this;
-	}
+        return *this;
+    }
 
-	template<NumberType A>
-	constexpr vec3 & operator-=(vec3<A> const& v)
-	{
-		this->x -= static_cast<T>(v.x);
-		this->y -= static_cast<T>(v.y);
+    template <NumberType A>
+    constexpr vec3 &operator-=(vec3<A> const &v)
+    {
+        this->x -= static_cast<T>(v.x);
+        this->y -= static_cast<T>(v.y);
         this->z -= static_cast<T>(v.z);
-		return *this;
-	}
+        return *this;
+    }
 
-	template<NumberType A>
-	constexpr vec3 & operator*=(A scalar)
-	{
-		this->x *= static_cast<T>(scalar);
-		this->y *= static_cast<T>(scalar);
+    template <NumberType A>
+    constexpr vec3 &operator*=(A scalar)
+    {
+        this->x *= static_cast<T>(scalar);
+        this->y *= static_cast<T>(scalar);
         this->z *= static_cast<T>(scalar);
-		return *this;
-	}
+        return *this;
+    }
 
-	template<NumberType A>
-	constexpr vec3 & operator*=(vec3<A> const& v)
-	{
-		this->x *= static_cast<T>(v.x);
-		this->y *= static_cast<T>(v.y);
+    template <NumberType A>
+    constexpr vec3 &operator*=(vec3<A> const &v)
+    {
+        this->x *= static_cast<T>(v.x);
+        this->y *= static_cast<T>(v.y);
         this->z *= static_cast<T>(v.z);
-		return *this;
-	}
+        return *this;
+    }
 
     template <NumberType A>
-	constexpr vec3 & operator/=(A scalar)
-	{
-		this->x /= static_cast<T>(scalar);
-		this->y /= static_cast<T>(scalar);
+    constexpr vec3 &operator/=(A scalar)
+    {
+        this->x /= static_cast<T>(scalar);
+        this->y /= static_cast<T>(scalar);
         this->z /= static_cast<T>(scalar);
-		return *this;
-	}
+        return *this;
+    }
 
     template <NumberType A>
-	constexpr vec3 & operator/=(vec3<A> const& v)
-	{
-		this->x /= static_cast<T>(v.x);
-		this->y /= static_cast<T>(v.y);
+    constexpr vec3 &operator/=(vec3<A> const &v)
+    {
+        this->x /= static_cast<T>(v.x);
+        this->y /= static_cast<T>(v.y);
         this->z /= static_cast<T>(v.z);
-		return *this;
-	}
+        return *this;
+    }
 
     // Increment and decrement operators
 
@@ -212,14 +212,16 @@ struct vec3 {
     // Compound assignment operators
 
     // Modulus operator
-    vec3& operator%=(const vec3 &v) {
+    vec3 &operator%=(const vec3 &v)
+    {
         x %= v.x;
         y %= v.y;
         z %= v.z;
         return *this;
     }
 
-    vec3& operator%=(T scalar) {
+    vec3 &operator%=(T scalar)
+    {
         x %= scalar;
         y %= scalar;
         z %= scalar;
@@ -227,14 +229,18 @@ struct vec3 {
     }
 
     // Bitwise AND operator
-    vec3& operator&=(const vec3 &v) {
+    template <IntegerType A>
+    vec3 &operator&=(const vec3<A> &v)
+    {
         x &= v.x;
         y &= v.y;
         z &= v.z;
         return *this;
     }
 
-    vec3& operator&=(T scalar) {
+    template <IntegerType A>
+    vec3 &operator&=(A scalar)
+    {
         x &= scalar;
         y &= scalar;
         z &= scalar;
@@ -242,14 +248,18 @@ struct vec3 {
     }
 
     // Bitwise OR operator
-    vec3& operator|=(const vec3 &v) {
+    template <IntegerType A>
+    vec3 &operator|=(const vec3<A> &v)
+    {
         x |= v.x;
         y |= v.y;
         z |= v.z;
         return *this;
     }
-    
-    vec3& operator|=(T scalar) {
+
+    template <IntegerType A>
+    vec3 &operator|=(A scalar)
+    {
         x |= scalar;
         y |= scalar;
         z |= scalar;
@@ -257,14 +267,18 @@ struct vec3 {
     }
 
     // Bitwise XOR operator
-    vec3& operator^=(const vec3 &v) {
+    template <IntegerType A>
+    vec3 &operator^=(const vec3<A> &v)
+    {
         x ^= v.x;
         y ^= v.y;
         z ^= v.z;
         return *this;
     }
 
-    vec3& operator^=(T scalar) {
+    template <IntegerType A>
+    vec3 &operator^=(A scalar)
+    {
         x ^= scalar;
         y ^= scalar;
         z ^= scalar;
@@ -272,14 +286,18 @@ struct vec3 {
     }
 
     // Bitwise left shift operator
-    vec3& operator<<=(const vec3 &v) {
+    template <IntegerType A>
+    vec3 &operator<<=(const vec3<A> &v)
+    {
         x <<= v.x;
         y <<= v.y;
         z <<= v.z;
         return *this;
     }
 
-    vec3& operator<<=(int numBits) {
+    template <IntegerType A>
+    vec3 &operator<<=(A numBits)
+    {
         x <<= numBits;
         y <<= numBits;
         z <<= numBits;
@@ -287,14 +305,18 @@ struct vec3 {
     }
 
     // Bitwise right shift operator
-    vec3& operator>>=(const vec3 &v) {
+    template <IntegerType A>
+    vec3 &operator>>=(const vec2<A> &v)
+    {
         x >>= v.x;
         y >>= v.y;
         z >>= v.z;
         return *this;
     }
 
-    vec3& operator>>=(int numBits) {
+    template <IntegerType A>
+    vec3 &operator>>=(A numBits)
+    {
         x >>= numBits;
         y >>= numBits;
         z >>= numBits;

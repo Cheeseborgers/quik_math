@@ -10,6 +10,7 @@ struct vec3;
 template <NumberType T>
 struct vec4;
 
+
 template <NumberType T>
 struct vec2 {
 
@@ -201,14 +202,16 @@ struct vec2 {
     }
 
     // Bitwise AND operator
-    vec2 &operator&=(const vec2 &v)
+    template <IntegerType A>
+    vec2 &operator&=(const vec2<A> &v)
     {
         x &= v.x;
         y &= v.y;
         return *this;
     }
 
-    vec2 &operator&=(T scalar)
+    template <IntegerType A>
+    vec2 &operator&=(A scalar)
     {
         x &= scalar;
         y &= scalar;
@@ -216,14 +219,16 @@ struct vec2 {
     }
 
     // Bitwise OR operator
-    vec2 &operator|=(const vec2 &v)
+    template <IntegerType A>
+    vec2 &operator|=(const vec2<A> &v)
     {
         x |= v.x;
         y |= v.y;
         return *this;
     }
 
-    vec2 &operator|=(T scalar)
+    template <IntegerType A>
+    vec2 &operator|=(A scalar)
     {
         x |= scalar;
         y |= scalar;
@@ -231,14 +236,16 @@ struct vec2 {
     }
 
     // Bitwise XOR operator
-    vec2 &operator^=(const vec2 &v)
+    template <IntegerType A>
+    vec2 &operator^=(const vec2<A> &v)
     {
         x ^= v.x;
         y ^= v.y;
         return *this;
     }
 
-    vec2 &operator^=(T scalar)
+    template <IntegerType A>
+    vec2 &operator^=(A scalar)
     {
         x ^= scalar;
         y ^= scalar;
@@ -246,14 +253,16 @@ struct vec2 {
     }
 
     // Bitwise left shift operator
-    vec2 &operator<<=(const vec2 &v)
+    template <IntegerType A>
+    vec2 &operator<<=(const vec2<A> &v)
     {
         x <<= v.x;
         y <<= v.y;
         return *this;
     }
 
-    vec2 &operator<<=(int numBits)
+    template <IntegerType A>
+    vec2 &operator<<=(A numBits)
     {
         x <<= numBits;
         y <<= numBits;
@@ -261,14 +270,16 @@ struct vec2 {
     }
 
     // Bitwise right shift operator
-    vec2 &operator>>=(const vec2 &v)
+    template <IntegerType A>
+    vec2 &operator>>=(const vec2<A> &v)
     {
         x >>= v.x;
         y >>= v.y;
         return *this;
     }
 
-    vec2 &operator>>=(int numBits)
+    template <IntegerType A>
+    vec2 &operator>>=(A numBits)
     {
         x >>= numBits;
         y >>= numBits;

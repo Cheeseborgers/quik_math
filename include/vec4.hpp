@@ -291,7 +291,8 @@ struct vec4 {
     }
 
     // Bitwise AND operator
-    vec4 &operator&=(const vec4 &v)
+    template <IntegerType A>
+    vec4 &operator&=(const vec4<A> &v)
     {
         x &= v.x;
         y &= v.y;
@@ -300,7 +301,8 @@ struct vec4 {
         return *this;
     }
 
-    vec4 &operator&=(T scalar)
+    template <IntegerType A>
+    vec4 &operator&=(A scalar)
     {
         x &= scalar;
         y &= scalar;
@@ -310,7 +312,8 @@ struct vec4 {
     }
 
     // Bitwise OR operator
-    vec4 &operator|=(const vec4 &v)
+    template <IntegerType A>
+    vec4 &operator|=(const vec4<A> &v)
     {
         x |= v.x;
         y |= v.y;
@@ -319,7 +322,8 @@ struct vec4 {
         return *this;
     }
 
-    vec4 &operator|=(T scalar)
+    template <IntegerType A>
+    vec4 &operator|=(A scalar)
     {
         x |= scalar;
         y |= scalar;
@@ -329,7 +333,8 @@ struct vec4 {
     }
 
     // Bitwise XOR operator
-    vec4 &operator^=(const vec4 &v)
+    template <IntegerType A>
+    vec4 &operator^=(const vec4<A> &v)
     {
         x ^= v.x;
         y ^= v.y;
@@ -338,7 +343,8 @@ struct vec4 {
         return *this;
     }
 
-    vec4 &operator^=(T scalar)
+    template <IntegerType A>
+    vec4 &operator^=(A scalar)
     {
         x ^= scalar;
         y ^= scalar;
@@ -348,7 +354,8 @@ struct vec4 {
     }
 
     // Bitwise left shift operator
-    vec4 &operator<<=(const vec4 &v)
+    template <IntegerType A>
+    vec4 &operator<<=(const vec4<A> &v)
     {
         x <<= v.x;
         y <<= v.y;
@@ -357,7 +364,8 @@ struct vec4 {
         return *this;
     }
 
-    vec4 &operator<<=(int numBits)
+    template <IntegerType A>
+    vec4 &operator<<=(A numBits)
     {
         x <<= numBits;
         y <<= numBits;
@@ -367,7 +375,8 @@ struct vec4 {
     }
 
     // Bitwise right shift operator
-    vec4 &operator>>=(const vec4 &v)
+    template <IntegerType A>
+    vec4 &operator>>=(const vec4<A> &v)
     {
         x >>= v.x;
         y >>= v.y;
@@ -376,7 +385,8 @@ struct vec4 {
         return *this;
     }
 
-    vec4 &operator>>=(int numBits)
+    template <IntegerType A>
+    vec4 &operator>>=(A numBits)
     {
         x >>= numBits;
         y >>= numBits;
